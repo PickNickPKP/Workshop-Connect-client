@@ -1,0 +1,53 @@
+import FormInput from "../../components/form/FormInput";
+import createAlert from "../../utils/createAlert";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
+function Register() {
+  //JS
+  const { register, handleSubmit } = useForm();
+
+  const hdlSubmit = async (value) => {
+    console.log(value);
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/auth/register",
+        value
+      );
+      console.log(res);
+      createAlert("success",res.data.message)
+    } catch (error) {
+      console.log(error);
+      createAlert("info", error.response?.data?.message);
+    }
+  };
+  return (
+    <div className="flex w-full h-full justify-end">
+      {/*Card*/}
+      <div className="border w-64 h-[300px] p-4 m-4 rounded-md">
+        <h1 className="font-bold text-center">Register</h1>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit(hdlSubmit)}>
+          <div className=" flex flex-col gap-4">
+            <FormInput register={register} name="email" />
+            <FormInput register={register} name="name" />
+            <FormInput register={register} name="password" />
+            <FormInput register={register} name="confirmPassword" />
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <button
+              className="bg-slate-800 p-2 text-white rounded-md"
+              type="submit"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default Register;
