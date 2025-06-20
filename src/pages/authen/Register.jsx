@@ -18,8 +18,15 @@ function Register() {
   console.log(errors);
 
   const hdlSubmit = async (value) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(value);
+     console.log("Start waiting...");
+  await new Promise((resolve) => setTimeout(resolve, 6000));
+  console.log("End waiting...", value);
+
+
+
+    // await new Promise((resolve) => setTimeout(resolve, 6000));
+    // console.log(value);
+
     try {
       const res = await actionRegister(value)
       console.log(res);
